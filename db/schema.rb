@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(version: 2019_11_06_000925) do
 #   Unknown type 'role_role_types' for column 'role_type'
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "lastname"
+    t.string "first_name"
+    t.string "last_name"
     t.string "email"
     t.datetime "birthday"
     t.string "address"
