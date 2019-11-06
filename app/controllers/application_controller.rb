@@ -22,7 +22,7 @@ class ApplicationController < ActionController::API
   end
 
   def authorize_admin
-    unless @current_user.roles&.where(role_type: "admin").first
+    unless @current_user.has_admin_role?
       render json: { errors: 'Unauthorized action' }, status: :unauthorized
     end
   end

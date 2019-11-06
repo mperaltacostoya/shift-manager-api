@@ -8,4 +8,13 @@ class User < ApplicationRecord
   validates :password,
             length: { minimum: 6 },
             if: -> { new_record? || !password.nil? }
+
+  def has_admin_role?
+    self.roles&.where(role_type: 'admin').first.present?
+  end
+
+  def has_employee_role?
+    self.roles&.where(role_type: 'employee').first.present?
+  end
+
 end
