@@ -1,10 +1,12 @@
 class UsersController < ApplicationController
-  before_action :authorize_request, except: :create
+  before_action :authorize_request
+  before_action :authorize_admin, except: :show
+  before_action :authorize_self_content, only: :show
   before_action :find_user, except: %i[create index]
 
   # GET /users
   def index
-    @users = User.all
+    @users = User.all.includes(:roles).where(roles: { role_type: 'employee' })
   end
 
   # GET /users/{id}
@@ -15,7 +17,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      render json: @user, status: :created
+      @user.roles.create()
+      render json: { message: 'User successfully created' }, status: :created
     else
       render json: { errors: @user.errors.full_messages },
              status: :unprocessable_entity
@@ -45,7 +48,7 @@ class UsersController < ApplicationController
 
   def user_params
     params.permit(
-      :name, :lastname, :email, :password, :password_confirmation
+      :first_name, :last_name, :email, :password, :password_confirmation, :birthday, :address, :phone
     )
   end
 end
