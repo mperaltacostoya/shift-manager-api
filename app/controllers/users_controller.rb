@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :authorize_request
-  before_action :authorize_admin, except: %i[show update]
+  before_action :authorize_admin, except: :show
+  before_action :authorize_self_content, only: :show
   before_action :find_user, except: %i[create index]
 
   # GET /users
@@ -49,9 +50,5 @@ class UsersController < ApplicationController
     params.permit(
       :first_name, :last_name, :email, :password, :password_confirmation, :birthday, :address, :phone
     )
-  end
-
-  def change_password_params
-    params.permit(:password, :password_confirmation)
   end
 end
