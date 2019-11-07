@@ -3,7 +3,6 @@ class AuthenticationController < ApplicationController
 
   # POST /auth/login
   def login
-    p params[:email]
     @user = User.find_by_email(params[:email])
     if @user&.authenticate(params[:password])
       token = JsonWebToken.encode(user_id: @user.id)
@@ -19,7 +18,7 @@ class AuthenticationController < ApplicationController
   def sign_up
     @user = User.new(user_params)
     if @user.save
-      @user.roles.create()
+      @user.roles.create
       render json: { message: 'User successfully registered' }, status: :created
     else
       render json: { errors: @user.errors.full_messages },
@@ -35,7 +34,8 @@ class AuthenticationController < ApplicationController
 
   def signup_params
     params.permit(
-      :first_name, :last_name, :email, :password, :password_confirmation, :birthday, :address, :phone
+      :first_name, :last_name, :email, :password, :password_confirmation,
+      :birthday, :address, :phone
     )
   end
 end

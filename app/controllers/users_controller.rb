@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   before_action :authorize_request
   before_action :authorize_admin, except: :show
@@ -10,14 +12,13 @@ class UsersController < ApplicationController
   end
 
   # GET /users/{id}
-  def show
-  end
+  def show; end
 
   # POST /users
   def create
     @user = User.new(user_params)
     if @user.save
-      @user.roles.create()
+      @user.roles.create
       render json: { message: 'User successfully created' }, status: :created
     else
       render json: { errors: @user.errors.full_messages },
@@ -42,13 +43,14 @@ class UsersController < ApplicationController
 
   def find_user
     @user = User.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render json: { errors: 'User not found' }, status: :not_found
+  rescue ActiveRecord::RecordNotFound
+    render json: { errors: 'User not found' }, status: :not_found
   end
 
   def user_params
     params.permit(
-      :first_name, :last_name, :email, :password, :password_confirmation, :birthday, :address, :phone
+      :first_name, :last_name, :email, :password, :password_confirmation,
+      :birthday, :address, :phone
     )
   end
 end
