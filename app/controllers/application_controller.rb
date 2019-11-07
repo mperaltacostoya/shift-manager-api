@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::API
-  
   def not_found
     render json: { errors: 'Not found' }, status: :not_found
   end
@@ -17,18 +16,18 @@ class ApplicationController < ActionController::API
         render json: { errors: e.message }, status: :unauthorized
       end
     else
-      render json: { errors: 'Authorization header missing' }, status: :bad_request if header.nil?
+      render json: { errors: 'Authorization header missing' }, status: :bad_request
     end
   end
 
   def authorize_admin
-    unless @current_user.has_admin_role?
+    unless @current_user.admin_role?
       render json: { errors: 'Missing permission' }, status: :forbidden
     end
   end
 
   def authorize_self_content
-    unless @current_user.has_admin_role?
+    unless @current_user.admin_role?
       if @current_user.id.to_s != params[:id]
         render json: { errors: 'Missing permission' }, status: :forbidden
       end

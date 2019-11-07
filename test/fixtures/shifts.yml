@@ -1,17 +1,17 @@
 # == Schema Information
 #
-# Table name: roles
+# Table name: shifts
 #
 #  id         :integer          not null, primary key
-#  role_name  :string           default("Employee")
 #  user_id    :integer
+#  comments   :text
+#  open       :boolean          default("true")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  role_type  :enum             default("employee")
 #
 # Indexes
 #
-#  index_roles_on_user_id  (user_id)
+#  index_shifts_on_user_id  (user_id)
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
