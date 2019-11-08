@@ -28,9 +28,11 @@ class ApplicationController < ActionController::API
 
   def authorize_self_content
     unless @current_user.admin_role?
-      user_id = params[:user_id].present? ? params[:user_id] : params[:id]
-      if @current_user.id.to_s != user_id
-        render json: { errors: 'Missing permission' }, status: :forbidden
+      if params[:user_id].present? || params[:id].present?
+        user_id = params[:user_id].present? ? params[:user_id] : params[:id]
+        if @current_user.id.to_s != user_id
+          render json: { errors: 'Missing permission' }, status: :forbidden
+        end
       end
     end
   end

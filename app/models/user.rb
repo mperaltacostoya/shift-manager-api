@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -13,8 +15,6 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
-
-# frozen_string_literal: true
 class User < ApplicationRecord
   has_secure_password
   has_many :roles, dependent: :destroy
