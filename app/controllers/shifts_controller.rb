@@ -12,7 +12,7 @@ class ShiftsController < ApplicationController
     if !@current_user.admin_role? && !params[:user_id].present?
       render json: { errors: 'Missing permission' }, status: :forbidden
     end
-    @shifts = Shift.all.includes(:entries)
+    @shifts = Shift.all
     @shifts.where!(user_id: params[:user_id]) if params[:user_id].present?
   end
 
@@ -56,7 +56,7 @@ class ShiftsController < ApplicationController
   end
 
   def set_shift
-    @shift = Shift.includes(:entries).find_by(id: params[:id])
+    @shift = Shift.find_by(id: params[:id])
   end
 
   def shift_params

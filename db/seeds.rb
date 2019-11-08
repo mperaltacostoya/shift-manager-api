@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+puts 'running seed...'
 User.all.destroy_all
 
 admin = User.create(
@@ -18,6 +19,7 @@ admin = User.create(
 
 admin.roles.create(role_type: 'admin', role_name: 'Administrator')
 
+# user creation
 5.times do
   u = User.create(
     first_name: Faker::Name.first_name,
@@ -29,27 +31,25 @@ admin.roles.create(role_type: 'admin', role_name: 'Administrator')
     password: 'hello123',
     password_confirmation: 'hello123',
   )
+  # generate employee role
   u.roles.create
 
-  2.times do |index|
-    shift = u.shifts.create(open: false, comments: Faker::Lorem.sentence)
+  # generate closed shifts
+  5.times do |index|
     day = DateTime.now - (index + 1).days
-    shift.entries.create(
-      entry_datetime: Faker::Time.between(from: day - 8.hours, to: day - 4.hours),
-      comments: Faker::ChuckNorris.fact
-    )
-    shift.entries.create(
-      entry_type: 'check_out',
-      entry_datetime: Faker::Time.between(from: day - 4.hours, to: day)
+    u.shifts.create(
+      comments: Faker::Lorem.sentence,
+      check_in_time: Faker::Time.between(from: day - 8.hours, to: day - 4.hours),
+      check_out_time: Faker::Time.between(from: day - 4.hours, to: day)
     )
   end
 
-  open_shift = u.shifts.create
-  open_shift.entries.create(
-    entry_datetime: Faker::Time.between(
-      from: DateTime.now - 8.hours,
-      to: DateTime.now - 4.hours
-    ),
-    comments: Faker::ChuckNorris.fact
+  # generate an open shift
+  u.shifts.create(
+    comments: Faker::ChuckNorris.fact,
+    check_in_time: Faker::Time.between(from: DateTime.now - 8.hours, to: DateTime.now - 4.hours)
   )
+
 end
+
+puts 'success'

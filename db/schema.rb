@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_07_185957) do
+ActiveRecord::Schema.define(version: 2019_11_07_183547) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
   create_table "shifts", force: :cascade do |t|
     t.bigint "user_id"
     t.text "comments", default: ""
-    t.boolean "open", default: true
+    t.datetime "check_in_time"
+    t.datetime "check_out_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_shifts_on_user_id"
