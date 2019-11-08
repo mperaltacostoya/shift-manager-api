@@ -19,7 +19,17 @@
 class Shift < ApplicationRecord
   belongs_to :user
 
+  validate :only_shift_open, on: :create
+  validates :check_in_time, presence: true
+
   def open?
     check_out_time.blank?
+  end
+
+  private
+
+  def only_shift_open
+    last_open_shift = Shift.where(user_id: user_id, check_out_time: nil)
+    errors.add(:base, 'User already has an open shift') if last_open_shift.present?
   end
 end

@@ -3,12 +3,11 @@ class AuthenticationController < ApplicationController
 
   # POST /auth/login
   def login
-    @user = User.find_by_email(params[:email])
-    if @user&.authenticate(params[:password])
-      token = JsonWebToken.encode(user_id: @user.id)
-      time = Time.now + 24.hours.to_i
-      render json: { token: token, exp: time.strftime('%m-%d-%Y %H:%M'),
-                     username: @user.email }, status: :ok
+    @user = User.find_by_email(login_params[:email])
+    if @user&.authenticate(login_params[:password])
+      @token = JsonWebToken.encode(user_id: @user.id)
+      @time = Time.now + 24.hours.to_i
+      render status: :ok
     else
       render json: { error: 'Unauthorized' }, status: :unauthorized
     end
@@ -16,10 +15,10 @@ class AuthenticationController < ApplicationController
 
   # POST /auth/signup
   def sign_up
-    @user = User.new(user_params)
+    @user = User.new(signup_params)
     if @user.save
       @user.roles.create
-      render json: { message: 'User successfully registered' }, status: :created
+      render status: :created
     else
       render json: { errors: @user.errors.full_messages },
              status: :unprocessable_entity

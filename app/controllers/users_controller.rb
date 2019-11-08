@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       @user.roles.create
-      render json: { message: 'User successfully created' }, status: :created
+      render status: :created
     else
       render json: { errors: @user.errors.full_messages },
              status: :unprocessable_entity
@@ -36,7 +36,10 @@ class UsersController < ApplicationController
 
   # DELETE /users/{id}
   def destroy
-    @user.destroy
+    unless @user.destroy
+      render json: { errors: @user.errors.full_messages },
+             status: :unprocessable_entity
+    end
   end
 
   private

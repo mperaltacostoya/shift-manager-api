@@ -29,7 +29,7 @@ admin.roles.create(role_type: 'admin', role_name: 'Administrator')
     birthday: Faker::Date.between(from: 60.years.ago, to: 18.years.ago),
     phone: Faker::PhoneNumber.phone_number_with_country_code,
     password: 'hello123',
-    password_confirmation: 'hello123',
+    password_confirmation: 'hello123'
   )
   # generate employee role
   u.roles.create
