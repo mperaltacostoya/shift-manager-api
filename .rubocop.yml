@@ -1,6 +1,5 @@
 Metrics/LineLength:
   Max: 100
-  # If you want the rule only apply to a specific folder/file
   Include:
     - 'app/**/*'
     
