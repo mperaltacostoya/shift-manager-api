@@ -18,7 +18,7 @@ admin = User.create(
 
 admin.roles.create(role_type: 'admin', role_name: 'Administrator')
 
-5.times {
+5.times do
   u = User.create(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
@@ -29,5 +29,27 @@ admin.roles.create(role_type: 'admin', role_name: 'Administrator')
     password: 'hello123',
     password_confirmation: 'hello123',
   )
-  u.roles.create()
-}
+  u.roles.create
+
+  2.times do |index|
+    shift = u.shifts.create(open: false, comments: Faker::Lorem.sentence)
+    day = DateTime.now - (index + 1).days
+    shift.entries.create(
+      entry_datetime: Faker::Time.between(from: day - 8.hours, to: day - 4.hours),
+      comments: Faker::ChuckNorris.fact
+    )
+    shift.entries.create(
+      entry_type: 'check_out',
+      entry_datetime: Faker::Time.between(from: day - 4.hours, to: day)
+    )
+  end
+
+  open_shift = u.shifts.create
+  open_shift.entries.create(
+    entry_datetime: Faker::Time.between(
+      from: DateTime.now - 8.hours,
+      to: DateTime.now - 4.hours
+    ),
+    comments: Faker::ChuckNorris.fact
+  )
+end

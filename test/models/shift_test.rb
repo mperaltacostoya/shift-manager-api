@@ -4,7 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer
-#  comments   :text
+#  comments   :text             default("")
 #  open       :boolean          default("true")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
