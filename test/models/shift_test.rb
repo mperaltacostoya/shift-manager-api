@@ -2,12 +2,13 @@
 #
 # Table name: shifts
 #
-#  id         :integer          not null, primary key
-#  user_id    :integer
-#  comments   :text             default("")
-#  open       :boolean          default("true")
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id             :integer          not null, primary key
+#  user_id        :integer
+#  comments       :text             default("")
+#  check_in_time  :datetime
+#  check_out_time :datetime
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
 #
 # Indexes
 #

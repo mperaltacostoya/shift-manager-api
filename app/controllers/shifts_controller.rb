@@ -12,7 +12,7 @@ class ShiftsController < ApplicationController
     if !@current_user.admin_role? && !params[:user_id].present?
       render json: { errors: 'Missing permission' }, status: :forbidden
     end
-    @shifts = Shift.all.includes(:entries)
+    @shifts = Shift.all
     @shifts.where!(user_id: params[:user_id]) if params[:user_id].present?
   end
 
@@ -25,7 +25,7 @@ class ShiftsController < ApplicationController
 
   # POST /users/{user_id}/shifts
   def create
-    @shift = @user.shifts.build(shift_params)
+    @shift = @user.shifts.new(shift_params)
     if @shift.save
       render json: { message: 'Shift successfully created' }, status: :created
     else
@@ -44,7 +44,10 @@ class ShiftsController < ApplicationController
 
   # DELETE /shifts/{id}
   def destroy
-    @shift.destroy
+    unless @shift.destroy
+      render json: { errors: @shift.errors.full_messages },
+             status: :unprocessable_entity
+    end
   end
 
   private
@@ -56,12 +59,12 @@ class ShiftsController < ApplicationController
   end
 
   def set_shift
-    @shift = Shift.includes(:entries).find_by(id: params[:id])
+    @shift = Shift.find_by(id: params[:id])
   end
 
   def shift_params
     params.permit(
-      :user_id, :comments, :open 
+      :user_id, :comments, :check_in_time, :check_out_time
     )
   end
 end
