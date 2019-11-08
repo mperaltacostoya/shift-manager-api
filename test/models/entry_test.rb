@@ -4,7 +4,7 @@
 #
 #  id             :integer          not null, primary key
 #  shift_id       :integer
-#  comments       :text
+#  comments       :text             default("")
 #  entry_datetime :datetime
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
