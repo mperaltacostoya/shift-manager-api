@@ -20,7 +20,7 @@ admin = User.create(
 admin.roles.create(role_type: 'admin', role_name: 'Administrator')
 
 # user creation
-5.times do
+30.times do
   u = User.create(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
@@ -35,7 +35,7 @@ admin.roles.create(role_type: 'admin', role_name: 'Administrator')
   u.roles.create
 
   # generate closed shifts
-  5.times do |index|
+  30.times do |index|
     day = DateTime.now - (index + 1).days
     u.shifts.create(
       comments: Faker::Lorem.sentence,
