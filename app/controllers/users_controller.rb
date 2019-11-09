@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = paginate User.all.includes(:roles).where(roles: { role_type: 'employee' })
+    @users = paginate User.all.includes(:roles).where(roles: { role_type: 'employee' }).page(params[:page])
   end
 
   # GET /users/{id}
