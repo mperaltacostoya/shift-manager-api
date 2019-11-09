@@ -14,6 +14,7 @@ class ShiftsController < ApplicationController
     end
     @shifts = Shift.all
     @shifts.where!(user_id: params[:user_id]) if params[:user_id].present?
+    @shifts = paginate @shifts.page(params[:page])
   end
 
   # GET /shifts/{id}
