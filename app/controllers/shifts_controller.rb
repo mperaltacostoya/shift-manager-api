@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+
+# Shifts controller: Define CRUD methods for shifts
 class ShiftsController < ApplicationController
   before_action :authorize_request
   before_action :authorize_admin, except: %i[index show]
