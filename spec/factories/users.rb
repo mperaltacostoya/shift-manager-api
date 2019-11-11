@@ -32,7 +32,6 @@ FactoryBot.define do
       after(:create) do |user|
         create(:admin_role, user: user)
       end
-    end  
+    end
   end
-
 end
