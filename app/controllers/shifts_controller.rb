@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ShiftsController < ApplicationController
   before_action :authorize_request
   before_action :authorize_admin, except: %i[index show]

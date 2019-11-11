@@ -5,18 +5,20 @@ class ApplicationController < ActionController::API
 
   def authorize_request
     header = request.headers['Authorization']
-    unless header.nil?
-      header = header.split(' ').last
-      begin
-        @decoded = JsonWebToken.decode(header)
-        @current_user = User.where(id: @decoded[:user_id]).includes(:roles).first
-      rescue ActiveRecord::RecordNotFound => e
-        render json: { errors: e.message }, status: :unauthorized
-      rescue JWT::DecodeError => e
-        render json: { errors: e.message }, status: :unauthorized
+    if header.nil?
+      return render json: { errors: 'Authorization header missing' }, status: :bad_request
+    end
+
+    header = header.split(' ').last
+    begin
+      decoded = JsonWebToken.decode(header)
+      unless decoded && decoded[:user_id].present?
+        return render json: { errors: 'Invalid token' }, status: :unauthorized
       end
-    else
-      render json: { errors: 'Authorization header missing' }, status: :bad_request
+
+      @current_user = User.includes(:roles).find(decoded[:user_id])
+    rescue StandardError
+      return render json: { errors: 'Authentication failed' }, status: :unauthorized
     end
   end
 
@@ -31,7 +33,7 @@ class ApplicationController < ActionController::API
       if params[:user_id].present? || params[:id].present?
         user_id = params[:user_id].present? ? params[:user_id] : params[:id]
         if @current_user.id.to_s != user_id
-          render json: { errors: 'Missing permission' }, status: :forbidden
+          return render json: { errors: 'Missing permission' }, status: :forbidden
         end
       end
     end
