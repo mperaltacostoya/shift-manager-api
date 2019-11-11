@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# User controller: Define CRUD methods for users
 class UsersController < ApplicationController
   before_action :authorize_request
   before_action :authorize_admin, except: :show

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :open_shift, class: Shift do
     comments { Faker::Lorem.sentence }

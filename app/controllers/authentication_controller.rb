@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Authentication Controller: Allows sign up and sign in for the api
 class AuthenticationController < ApplicationController
   before_action :authorize_request, except: %i[login sign_up]
 

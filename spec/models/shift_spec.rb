@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe Shift, :type => :model do
+RSpec.describe Shift, type: :model do
   before(:all) do
     user = create(:employee_user)
     @shift = create(:closed_shift, user: user)
@@ -22,7 +24,7 @@ RSpec.describe Shift, :type => :model do
         it 'is not valid' do
           user = create(:employee_user_with_open_shift)
           shift = build(:open_shift, user: user)
-          expect {shift.save!}.to raise_error(ActiveRecord::RecordInvalid,'Validation failed: User already has an open shift')
+          expect { shift.save! }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: User already has an open shift')
         end
       end
 

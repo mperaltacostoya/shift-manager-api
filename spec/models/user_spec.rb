@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe User, :type => :model do
+RSpec.describe User, type: :model do
   before(:all) do
     @user = create(:user)
     @employee_user = create(:employee_user)

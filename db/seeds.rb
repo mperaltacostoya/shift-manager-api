@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
@@ -14,7 +16,7 @@ admin = User.create(
   last_name: Faker::Name.last_name,
   email: 'admin@example.org',
   password: 'hello123',
-  password_confirmation: 'hello123',
+  password_confirmation: 'hello123'
 )
 
 admin.roles.create(role_type: 'admin', role_name: 'Administrator')
@@ -49,7 +51,6 @@ admin.roles.create(role_type: 'admin', role_name: 'Administrator')
     comments: Faker::ChuckNorris.fact,
     check_in_time: Faker::Time.between(from: DateTime.now - 8.hours, to: DateTime.now - 4.hours)
   )
-
 end
 
 puts 'success'

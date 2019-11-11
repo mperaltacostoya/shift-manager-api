@@ -15,9 +15,6 @@ ActiveRecord::Schema.define(version: 2019_11_07_183547) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-# Could not dump table "roles" because of following StandardError
-#   Unknown type 'role_role_types' for column 'role_type'
-
   create_table "shifts", force: :cascade do |t|
     t.bigint "user_id"
     t.text "comments", default: ""
