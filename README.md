@@ -1,24 +1,26 @@
-# README
+# Shift Manager Api
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The api allows multiple administrators to keep a record of employees' working hours. In order to accomplish that, administrator can create a user shift with a param called check in time, that represent the date and time a shift start. In the moment the user leave work, the current open shift end and the shift can be updated with an check out time. The api is flexible to change or delete previous shifts times in case any shift needs to be corrected. The only restriction is that an administrator can't create a new shift if the user already has an open shift. This shift must be closed (update its check out time) in order to create a new one.
 
-Things you may want to cover:
+## How it works?
 
-* Ruby version
+* Administrator are users with the role 'admin'. This user must be created at server side because the api doesn't allow to create administrator from outside.
 
-* System dependencies
+* Administrator can create new users, update their fields, and even delete users from the system. The users created by administrator will have the 'employee' role.
 
-* Configuration
+* Administrator are responsible to share the password with the employees created so they can access to the system.
 
-* Database creation
+* Administrator can create new shifts, update their fields and delete them from the system at any time.
 
-* Database initialization
+* Shift are not associated to days. In case a worker starts his job on monday 20:00 hours and ends on tuesday at 04:00 hours, the system allows to keep record of this 'day of work'.
 
-* How to run the test suite
+* Users with role employee can sign up, although the information they provide can only be changed later by an administrator. This may include the password.
 
-* Services (job queues, cache servers, search engines, etc.)
+* Users with role employee can only see their own information.
 
-* Deployment instructions
+## Documentation
 
-* ...
+Full api documentation can be seen [here](https://documenter.getpostman.com/view/4921859/SW7UaVJQ)
+
+## How to test it?
+
