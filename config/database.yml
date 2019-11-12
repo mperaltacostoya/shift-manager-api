@@ -80,6 +80,7 @@ test:
 #
 production:
   <<: *default
+  adapter: postgresql
   database: shift-manager-api_production
   username: shift-manager-api
   password: <%= ENV['SHIFT-MANAGER-API_DATABASE_PASSWORD'] %>
