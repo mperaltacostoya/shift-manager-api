@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'jwt'
 
-RSpec.describe UsersController, :type => :api do
+RSpec.describe V1::UsersController, :type => :api do
   before(:all) do
     create_list(:employee_user_with_shifts, 10)
     @user = create(:employee_user_with_shifts)
@@ -16,7 +16,7 @@ RSpec.describe UsersController, :type => :api do
     describe 'GET #index' do
       before(:all) do
         header 'Authorization', @token
-        get '/users.json'
+        get 'v1/users.json'
       end
 
       it 'responds with a 200 status' do
@@ -27,7 +27,7 @@ RSpec.describe UsersController, :type => :api do
     describe 'GET #show' do
       before(:all) do
         header 'Authorization', @token
-        get "/users/#{@user.id}.json"
+        get "v1/users/#{@user.id}.json"
       end
 
       it 'responds with a 200 status' do
@@ -53,7 +53,7 @@ RSpec.describe UsersController, :type => :api do
           password_confirmation: 'hello123'
         }
         header 'Authorization', @token
-        post '/users.json', @params
+        post 'v1/users.json', @params
       end
 
       it 'responds with a 201 status' do
@@ -71,7 +71,7 @@ RSpec.describe UsersController, :type => :api do
           first_name: Faker::Name.first_name,
         }
         header 'Authorization', @token
-        put "/users/#{@user.id}.json", @params
+        put "v1/users/#{@user.id}.json", @params
       end
 
       it 'responds with a 204 status' do
@@ -87,7 +87,7 @@ RSpec.describe UsersController, :type => :api do
       before(:all) do
         @other_user = create(:user)
         header 'Authorization', @token
-        delete "/users/#{@other_user.id}.json"
+        delete "v1/users/#{@other_user.id}.json"
       end
 
       it 'responds with a 204 status' do
@@ -108,7 +108,7 @@ RSpec.describe UsersController, :type => :api do
     describe 'GET #index' do
       before(:all) do
         header 'Authorization', @token
-        get '/users.json'
+        get 'v1/users.json'
       end
 
       it 'responds with a 403 status' do
@@ -120,7 +120,7 @@ RSpec.describe UsersController, :type => :api do
       context 'when user accesss own information' do
         before(:all) do
           header 'Authorization', @token
-          get "/users/#{@user.id}.json"
+          get "v1/users/#{@user.id}.json"
         end
 
         it 'responds with a 200 status' do
@@ -136,7 +136,7 @@ RSpec.describe UsersController, :type => :api do
         before(:all) do
           other_user = create(:user)
           header 'Authorization', @token
-          get "/users/#{other_user.id}.json"
+          get "v1/users/#{other_user.id}.json"
         end
 
         it 'responds with a 403 status' do
@@ -155,7 +155,7 @@ RSpec.describe UsersController, :type => :api do
           password_confirmation: 'hello123'
         }
         header 'Authorization', @token
-        post "/users.json", @params
+        post "v1/users.json", @params
       end
 
       it 'responds with a 403 status' do
@@ -169,7 +169,7 @@ RSpec.describe UsersController, :type => :api do
           first_name: Faker::Name.first_name,
         }
         header 'Authorization', @token
-        put "/users/#{@user.id}.json", @params
+        put "v1/users/#{@user.id}.json", @params
       end
 
       it 'responds with a 403 status' do
@@ -180,7 +180,7 @@ RSpec.describe UsersController, :type => :api do
     describe 'DELETE #destroy' do
       before(:all) do
         header 'Authorization', @token
-        delete "/users/#{@user.id}.json"
+        delete "v1/users/#{@user.id}.json"
       end
 
       it 'responds with a 403 status' do
