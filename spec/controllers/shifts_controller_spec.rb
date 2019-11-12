@@ -1,4 +1,4 @@
-RSpec.describe ShiftsController, :type => :api do
+RSpec.describe V1::ShiftsController, :type => :api do
   before(:all) do
     create_list(:employee_user_with_shifts, 10)
     @user = create(:employee_user_with_shifts)
@@ -14,7 +14,7 @@ RSpec.describe ShiftsController, :type => :api do
       context "when access all user's shifts" do
         before(:all) do
           header 'Authorization', @token
-          get "/users/#{@user.id}/shifts.json"
+          get "v1/users/#{@user.id}/shifts.json"
         end
 
         it 'responds with a 200 status' do
@@ -25,7 +25,7 @@ RSpec.describe ShiftsController, :type => :api do
       context 'when access all shifts' do
         before(:all) do
           header 'Authorization', @token
-          get '/shifts.json'
+          get '/v1/shifts.json'
         end
 
         it 'responds with a 200 status' do
@@ -38,7 +38,7 @@ RSpec.describe ShiftsController, :type => :api do
       before(:all) do
         @shift = @user.shifts.first
         header 'Authorization', @token
-        get "shifts/#{@shift.id}.json"
+        get "v1/shifts/#{@shift.id}.json"
       end
 
       it 'responds with a 200 status' do
@@ -65,7 +65,7 @@ RSpec.describe ShiftsController, :type => :api do
         before(:all) do
           user_with_open_shift = create(:employee_user_with_open_shift)
           header 'Authorization', @token
-          post "/users/#{user_with_open_shift.id}/shifts.json", @params
+          post "v1/users/#{user_with_open_shift.id}/shifts.json", @params
         end
 
         it 'responds with a 422 status' do
@@ -76,7 +76,7 @@ RSpec.describe ShiftsController, :type => :api do
       context 'when user does not have an open shift' do
         before(:all) do
           header 'Authorization', @token
-          post "/users/#{@user.id}/shifts.json", @params
+          post "v1/users/#{@user.id}/shifts.json", @params
         end
 
         it 'responds with a 201 status' do
@@ -100,7 +100,7 @@ RSpec.describe ShiftsController, :type => :api do
           )
         }
         header 'Authorization', @token
-        put "/shifts/#{@shift.id}.json", @params
+        put "v1/shifts/#{@shift.id}.json", @params
       end
 
       it 'responds with a 204 status' do
@@ -117,7 +117,7 @@ RSpec.describe ShiftsController, :type => :api do
       before(:all) do
         @shift = @user.shifts.first
         header 'Authorization', @token
-        delete "/shifts/#{@shift.id}.json"
+        delete "v1/shifts/#{@shift.id}.json"
       end
 
       it 'responds with a 204 status' do
@@ -139,7 +139,7 @@ RSpec.describe ShiftsController, :type => :api do
       context 'when user access own shifts' do
         before(:all) do
           header 'Authorization', @token
-          get "/users/#{@user.id}/shifts.json"
+          get "v1/users/#{@user.id}/shifts.json"
         end
 
         it 'responds with a 200' do
@@ -151,7 +151,7 @@ RSpec.describe ShiftsController, :type => :api do
         before(:all) do
           other_user = create(:user)
           header 'Authorization', @token
-          get "/users/#{other_user.id}/shifts.json"
+          get "v1/users/#{other_user.id}/shifts.json"
         end
 
         it 'responds with a 403 status' do
@@ -162,7 +162,7 @@ RSpec.describe ShiftsController, :type => :api do
       context 'when user access all shifts' do
         before(:all) do
           header 'Authorization', @token
-          get '/shifts.json'
+          get 'v1/shifts.json'
         end
 
         it 'responds with a 403 status' do
@@ -176,7 +176,7 @@ RSpec.describe ShiftsController, :type => :api do
         before(:all) do
           shift = @user.shifts.first
           header 'Authorization', @token
-          get "shifts/#{shift.id}.json"
+          get "v1/shifts/#{shift.id}.json"
         end
 
         it 'responds with a 200 status' do
@@ -193,7 +193,7 @@ RSpec.describe ShiftsController, :type => :api do
           other_user = create(:employee_user_with_shifts)
           shift = other_user.shifts.first
           header 'Authorization', @token
-          get "shifts/#{shift.id}.json"
+          get "v1/shifts/#{shift.id}.json"
         end
 
         it 'responds with a 403 status' do
@@ -212,7 +212,7 @@ RSpec.describe ShiftsController, :type => :api do
           )
         }
         header 'Authorization', @token
-        post "/users/#{@user.id}/shifts.json", @params
+        post "v1/users/#{@user.id}/shifts.json", @params
       end
 
       it 'responds with a 403 status' do
@@ -235,7 +235,7 @@ RSpec.describe ShiftsController, :type => :api do
           )
         }
         header 'Authorization', @token
-        put "/shifts/#{@shift.id}.json", @params
+        put "/v1/shifts/#{@shift.id}.json", @params
       end
 
       it 'responds with a 403 status' do
@@ -247,7 +247,7 @@ RSpec.describe ShiftsController, :type => :api do
       before(:all) do
         @shift = @user.shifts.first
         header 'Authorization', @token
-        delete "/shifts/#{@shift.id}.json"
+        delete "v1/shifts/#{@shift.id}.json"
       end
 
       it 'responds with a 403 status' do

@@ -25,11 +25,14 @@
 #
 #
 Rails.application.routes.draw do
-  resources :users do
-    resources :shifts, shallow: true
+  namespace :v1 do
+    resources :users do
+      resources :shifts, shallow: true
+    end
+    resources :shifts, only: [:index]
+    post '/auth/login', to: 'authentication#login'
+    post '/auth/signup', to: 'authentication#sign_up'
+    get '/*a', to: 'application#not_found'
   end
-  resources :shifts, only: [:index]
-  post '/auth/login', to: 'authentication#login'
-  post '/auth/signup', to: 'authentication#sign_up'
   get '/*a', to: 'application#not_found'
 end

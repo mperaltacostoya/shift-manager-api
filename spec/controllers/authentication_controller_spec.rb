@@ -1,4 +1,4 @@
-RSpec.describe AuthenticationController, :type => :api do
+RSpec.describe V1::AuthenticationController, :type => :api do
   describe 'POST #signup' do
     before(:all) do
       @params = {
@@ -12,14 +12,14 @@ RSpec.describe AuthenticationController, :type => :api do
 
     context 'when user signup with valid credentials' do
       it 'responds with a 201 status' do
-        post 'auth/signup.json', @params
+        post 'v1/auth/signup.json', @params
         expect(last_response.status).to eq 201
       end
 
       it 'responds with a 422 status if email is taken' do
         user = create(:user)
         @params[:email] = user.email
-        post 'auth/signup.json', @params
+        post 'v1/auth/signup.json', @params
         expect(last_response.status).to eq 422
       end
     end
@@ -27,7 +27,7 @@ RSpec.describe AuthenticationController, :type => :api do
     context 'when user signup with not valid credentials' do
       it 'responds with a 422 status' do
         @params[:email] = 'no valid email'
-        post 'auth/signup.json', @params
+        post 'v1/auth/signup.json', @params
         expect(last_response.status).to eq 422
       end
     end
@@ -44,7 +44,7 @@ RSpec.describe AuthenticationController, :type => :api do
 
     context 'when user login with valid credentials' do
       before(:all) do
-        post 'auth/login.json', @params
+        post 'v1/auth/login.json', @params
       end
 
       it 'responds with a 200 status' do
@@ -67,7 +67,7 @@ RSpec.describe AuthenticationController, :type => :api do
     context 'when user login with not valid credentials' do
       it 'responds with a 401 status' do
         @params[:password] = 'other'
-        post 'auth/login.json', @params
+        post 'v1/auth/login.json', @params
         expect(last_response.status).to eq 401
       end
     end
